@@ -49,6 +49,34 @@ def main():
         start = event['start'].get('dateTime', event['start'].get('date'))
         print(start, event['summary'])
 
-
 if __name__ == '__main__':
     main()
+
+r'''
+import openpyxl
+from openpyxl import Workbook
+book = Workbook()
+sheet = book.active
+fname = r'C:\Users\Yousef\Documents\CalendarApp\Schedule.xlsx'
+wb = openpyxl.load_workbook(fname)
+
+
+sheet1 = wb['Sheet1']
+slots = [("1st",'08:15:00','09:45:00'),('2nd','10:00:00','11:30:00'),('3rd','11:45:00','13:15:00'),('4th','13:45:00','15:15:00'),('5th','15:45:00','17:15:00')]
+#gettingSlots creates returns a list with tuples in form of (tut name , room , start , end)
+def gettingSlots():
+    alist = []
+    for x in range(sheet1.min_row+1,sheet1.max_row+1):
+        for y in range(sheet1.min_column+1,sheet1.max_column+1):
+            if sheet1.cell(row=x,column =y).value != None:
+                text = sheet1.cell(row=x,column =y).value.split(' ')
+                start = ''
+                end = ''
+                for slot in slots:
+                    if(str(slot[0]) == str(sheet1.cell(row=sheet1.min_row,column=y).value)):
+                        start= slot[1]
+                        end = slot[2]
+                a = (text[0]+' ' +text[1],text[3],start,end)
+                alist.append(a)
+    return alist
+'''
